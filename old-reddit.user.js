@@ -3,7 +3,7 @@
 // @namespace    https://github.com/toothbrush/old-reddit.gist
 // @updateURL    https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
 // @downloadURL  https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
-// @version      0.2
+// @version      0.3
 // @description  Force old.reddit.com everywhere, and make it flow on mobile.
 // @author       toothbrush
 // @match        *://reddit.com/*
@@ -41,7 +41,22 @@
     return; // stop: the page is navigating away
   }
 
-  // ---- 2. minimal responsive styling for old.reddit.com ----
+  // ---- 2. force a mobile viewport ----
+  // old.reddit.com ships no width=device-width viewport, so phones render it at
+  // ~980px desktop width and scale down — meaning our media query below would
+  // never match. Overwrite (or add) the viewport so device width is used and the
+  // responsive rules actually fire.
+  function fixViewport() {
+    var vp = document.querySelector("meta[name='viewport']");
+    if (!vp) {
+      vp = document.createElement("meta");
+      vp.name = "viewport";
+      (document.head || document.documentElement).appendChild(vp);
+    }
+    vp.setAttribute("content", "width=device-width, initial-scale=1");
+  }
+
+  // ---- 3. minimal responsive styling for old.reddit.com ----
   var css = [
     "@media (max-width: 900px) {",
     // Kill the right-hand sidebar and give its space back to the threads.
@@ -60,13 +75,14 @@
     "}",
   ].join("\n");
 
-  function addStyle() {
+  function setup() {
+    fixViewport();
     var style = document.createElement("style");
     style.textContent = css;
     (document.head || document.documentElement).appendChild(style);
   }
 
   // document-start can run before <head> exists; wait for it if so.
-  if (document.head) addStyle();
-  else document.addEventListener("DOMContentLoaded", addStyle);
+  if (document.head) setup();
+  else document.addEventListener("DOMContentLoaded", setup);
 })();
