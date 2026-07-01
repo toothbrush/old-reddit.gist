@@ -30,9 +30,9 @@
 (function () {
   "use strict";
 
-  // Prefer the metadata version (GM_info); fall back to a literal for hosts that
-  // don't expose it (e.g. some iOS setups). Keep the literal in sync with @version.
-  var VERSION = (typeof GM_info !== "undefined" && GM_info.script && GM_info.script.version) || "0.4";
+  // Read the version from GM_info so it never drifts from @version; "(unknown)"
+  // on hosts that don't expose GM_info (e.g. some iOS setups).
+  var VERSION = (typeof GM_info !== "undefined" && GM_info.script && GM_info.script.version) || "(unknown)";
   console.log("[old-reddit] v" + VERSION + " running on " + location.hostname);
 
   var host = location.hostname;
