@@ -3,7 +3,7 @@
 // @namespace    https://github.com/toothbrush/old-reddit.gist
 // @updateURL    https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
 // @downloadURL  https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
-// @version      0.3
+// @version      0.4
 // @description  Force old.reddit.com everywhere, and make it flow on mobile.
 // @author       toothbrush
 // @match        *://reddit.com/*
@@ -32,7 +32,7 @@
 
   // Prefer the metadata version (GM_info); fall back to a literal for hosts that
   // don't expose it (e.g. some iOS setups). Keep the literal in sync with @version.
-  var VERSION = (typeof GM_info !== "undefined" && GM_info.script && GM_info.script.version) || "0.3";
+  var VERSION = (typeof GM_info !== "undefined" && GM_info.script && GM_info.script.version) || "0.4";
   console.log("[old-reddit] v" + VERSION + " running on " + location.hostname);
 
   var host = location.hostname;
@@ -61,8 +61,17 @@
     vp.setAttribute("content", "width=device-width, initial-scale=1");
   }
 
-  // ---- 3. minimal responsive styling for old.reddit.com ----
+  // ---- 3. zapped elements (hidden everywhere) ----
+  // One selector per line — add here to nuke clutter regardless of screen size.
+  var zap = [
+    "section.infobar",   // "welcome to reddit" / notice banners
+    ".midcol",           // up/down vote column (removes voting — trade for space)
+    "a.thumbnail",       // link thumbnails / blank placeholder circles
+  ].join(", ") + " { display: none !important; }";
+
+  // ---- 4. minimal responsive styling for old.reddit.com ----
   var css = [
+    zap,
     "@media (max-width: 900px) {",
     // Kill the right-hand sidebar and give its space back to the threads.
     "  .side { display: none !important; }",
@@ -73,7 +82,6 @@
     "  .thing .entry { overflow: hidden; }",
     // Rein in deep comment indentation so replies stay readable on a phone.
     "  .commentarea .child { margin-left: 8px !important; }",
-    "  .midcol { margin-right: 4px !important; }",
     // Stop horizontal overflow from long links/code blocks.
     "  body, .content { max-width: 100vw; overflow-x: hidden; }",
     "  pre, code { white-space: pre-wrap !important; word-break: break-word; }",
