@@ -4,16 +4,26 @@ Fast iteration without CDN caching, version bumps, or Tampermonkey update clicks
 
 ## One-time setup
 
-1. In Tampermonkey → **Utilities → Import from file** (or open the raw file), install
-   `dev/old-reddit.dev.user.js`.
-2. Tampermonkey → **Settings → Config mode: Advanced**, then confirm the loader's
-   `@connect localhost` prompt (it needs to fetch from your machine).
+Tampermonkey only offers its install page for a URL that **ends in `.user.js`**.
+"Import from file" is for TM's own backup dumps, and `file://` URLs won't trigger it
+on Firefox — so install the loader by serving it and opening the served URL:
+
+1. Start the server (leave it running):
+   ```sh
+   dev/serve.sh          # serves the repo at http://localhost:8765
+   ```
+2. In Firefox, navigate to
+   **http://localhost:8765/dev/old-reddit.dev.user.js** — Tampermonkey intercepts
+   the `.user.js` URL and shows its install page. Click **Install**.
+3. Approve the loader's `@connect localhost` prompt (it needs to fetch from your
+   machine). If you don't see it, Tampermonkey → **Settings → Config mode: Advanced**.
+
+(Alternatively, install from the pushed copy:
+`https://raw.githack.com/toothbrush/old-reddit.gist/main/dev/old-reddit.dev.user.js`.)
 
 ## Each session
 
-```sh
-dev/serve.sh          # serves the repo at http://localhost:8765
-```
+Make sure `dev/serve.sh` is running.
 
 Then: **edit `old-reddit.user.js` → save → reload the reddit tab.** Changes are live
 immediately — the loader re-fetches on every page load with a cache-buster.
