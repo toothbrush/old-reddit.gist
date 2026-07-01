@@ -30,6 +30,11 @@
 (function () {
   "use strict";
 
+  // Prefer the metadata version (GM_info); fall back to a literal for hosts that
+  // don't expose it (e.g. some iOS setups). Keep the literal in sync with @version.
+  var VERSION = (typeof GM_info !== "undefined" && GM_info.script && GM_info.script.version) || "0.3";
+  console.log("[old-reddit] v" + VERSION + " running on " + location.hostname);
+
   var host = location.hostname;
 
   // ---- 1. redirect to old.reddit.com ----
