@@ -69,6 +69,7 @@
     "a.thumbnail",       // link thumbnails / blank placeholder circles
     ".panestack-title",  // section header above listings
     ".menuarea",         // sort/tab bar under the listing header
+    "#sr-header-area",   // top subreddit nav strip
   ].join(", ") + " { display: none !important; }";
 
   // ---- 4. minimal responsive styling for old.reddit.com ----
