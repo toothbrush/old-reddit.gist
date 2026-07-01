@@ -67,6 +67,8 @@
     "section.infobar",   // "welcome to reddit" / notice banners
     ".midcol",           // up/down vote column (removes voting — trade for space)
     "a.thumbnail",       // link thumbnails / blank placeholder circles
+    ".panestack-title",  // section header above listings
+    ".menuarea",         // sort/tab bar under the listing header
   ].join(", ") + " { display: none !important; }";
 
   // ---- 4. minimal responsive styling for old.reddit.com ----
