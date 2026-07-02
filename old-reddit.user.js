@@ -3,7 +3,7 @@
 // @namespace    https://github.com/toothbrush/old-reddit.gist
 // @updateURL    https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
 // @downloadURL  https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
-// @version      0.4
+// @version      0.5
 // @description  Force old.reddit.com everywhere, and make it flow on mobile.
 // @author       toothbrush
 // @match        *://reddit.com/*
@@ -85,9 +85,18 @@
     "  .thing .entry { overflow: hidden; }",
     // Rein in deep comment indentation so replies stay readable on a phone.
     "  .commentarea .child { margin-left: 8px !important; }",
-    // Stop horizontal overflow from long links/code blocks.
-    "  body, .content { max-width: 100vw; overflow-x: hidden; }",
+    // Lock the viewport to vertical scrolling only. overflow-x:hidden must be on
+    // BOTH html and body — the scroll container is often <html>, and clamping
+    // only body leaves the page still able to pan sideways. width (not just
+    // max-width) kills any layout wrapper that sets an explicit min/px width.
+    "  html, body { overflow-x: hidden !important; max-width: 100% !important; }",
+    // Any single wide child (images, video, embeds, tables, code) can push the
+    // page wider than the viewport even with the clamps above — cap them all.
+    "  img, video, iframe, embed, object, table, pre, blockquote {",
+    "    max-width: 100% !important;",
+    "  }",
     "  pre, code { white-space: pre-wrap !important; word-break: break-word; }",
+    "  table { display: block; overflow-x: auto; }",  // wide tables scroll internally, not the page
     "}",
   ].join("\n");
 
