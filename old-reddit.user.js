@@ -3,7 +3,7 @@
 // @namespace    https://github.com/toothbrush/old-reddit.gist
 // @updateURL    https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
 // @downloadURL  https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
-// @version      0.4
+// @version      0.5
 // @description  Force old.reddit.com everywhere, and make it flow on mobile.
 // @author       toothbrush
 // @match        *://reddit.com/*
