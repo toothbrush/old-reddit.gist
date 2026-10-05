@@ -3,7 +3,7 @@
 // @namespace    https://github.com/toothbrush/old-reddit.gist
 // @updateURL    https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
 // @downloadURL  https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
-// @version      0.7
+// @version      0.8
 // @description  Force old.reddit.com everywhere, and make it flow on mobile.
 // @author       toothbrush
 // @match        *://reddit.com/*
@@ -11,6 +11,7 @@
 // @match        *://np.reddit.com/*
 // @match        *://old.reddit.com/*
 // @grant        none
+// @require      https://raw.githubusercontent.com/toothbrush/userscript-lib.gist/v4/no-hscroll.js
 // @run-at       document-start
 // ==/UserScript==
 
@@ -87,8 +88,9 @@
     "  .thing .entry { overflow: hidden; }",
     // Rein in deep comment indentation so replies stay readable on a phone.
     "  .commentarea .child { margin-left: 8px !important; }",
-    // Stop horizontal overflow from long links/code blocks.
-    "  body, .content { max-width: 100vw; overflow-x: hidden; }",
+    // Stop horizontal overflow from long links/code blocks; the
+    // viewport itself is pinned by no-hscroll.js (@require).
+    "  .content { max-width: 100vw; overflow-x: hidden; }",
     "  pre, code { white-space: pre-wrap !important; word-break: break-word; }",
     "}",
     // Synthesised dark mode: old reddit is light-only. The root background
