@@ -3,7 +3,7 @@
 // @namespace    https://github.com/toothbrush/old-reddit.gist
 // @updateURL    https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
 // @downloadURL  https://raw.githack.com/toothbrush/old-reddit.gist/main/old-reddit.user.js
-// @version      0.6
+// @version      0.7
 // @description  Force old.reddit.com everywhere, and make it flow on mobile.
 // @author       toothbrush
 // @match        *://reddit.com/*
@@ -90,6 +90,12 @@
     // Stop horizontal overflow from long links/code blocks.
     "  body, .content { max-width: 100vw; overflow-x: hidden; }",
     "  pre, code { white-space: pre-wrap !important; word-break: break-word; }",
+    "}",
+    // Synthesised dark mode: old reddit is light-only. The root background
+    // inverts too, so #fff renders black; media is inverted back.
+    "@media (prefers-color-scheme: dark) {",
+    "  html { filter: invert(1) hue-rotate(180deg); background: #fff; }",
+    "  img, picture, video, iframe { filter: invert(1) hue-rotate(180deg); }",
     "}",
   ].join("\n");
 
